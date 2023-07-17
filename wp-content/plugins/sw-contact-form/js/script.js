@@ -1,15 +1,14 @@
-
 jQuery(document).ready(function () {
     jQuery(".sw_new_lead_form").submit(function (e) {
 
-        let name = jQuery("#name").val();
-        let email = jQuery("#email").val();
-        let mobile = jQuery("#mobile").val();
+        let name = jQuery(this).find(".name").val();
+        let email = jQuery(this).find(".email").val();
+        let mobile = jQuery(this).find(".mobile").val();
         if (name == '' || email == '' || mobile == '') {
             return false;
         } else {
             e.preventDefault();
-            var formData = jQuery(".sw_new_lead_form").serializeArray();
+            var formData = jQuery(this).serializeArray();
             console.log(formData);
             jQuery.ajax({
                 url: ajax_object.ajax_url,
@@ -28,13 +27,11 @@ jQuery(document).ready(function () {
                     let dataRes = JSON.parse(data);
 
                     if (dataRes.success == true) {
-
-                        // alert("Data submited succssfully.");
-                        jQuery("form.sw_new_lead_form").prepend("<p class='error_message' style='color : green;background : white;padding:10; border:1px solid white;'>Form submitted successfully</p>");
-                        setTimeout(() => {
-                            jQuery("form.sw_new_lead_form .error_message").remove();
-                        }, 2000);
-                        jQuery(".sw_new_lead_form")[0].reset();
+                        alert("Data submited succssfully.");
+                        jQuery(".sw_new_lead_form").find(".name").val('');
+						jQuery(".sw_new_lead_form").find(".email").val('');
+						jQuery(".sw_new_lead_form").find(".mobile").val('');
+						jQuery(".sw_new_lead_form").find(".termsConditionPrivacyPolicy").prop("checked",false);
                     }
 
                 }
